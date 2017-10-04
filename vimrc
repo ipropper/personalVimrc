@@ -121,12 +121,14 @@ set foldcolumn=1
 syntax enable 
 
 " Enable 256 colors palette in Gnome Terminal
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
+"if $COLORTERM == 'gnome-terminal'
+"    set t_Co=256
+"endif
 
+
+" use solarized colorscheme
 try
-    colorscheme evening 
+    colorscheme solarized 
 catch
 endtry
 
@@ -152,6 +154,7 @@ set ffs=unix,dos,mac
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
+" Moding here
 set nowb
 set noswapfile
 
