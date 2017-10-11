@@ -23,10 +23,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set jj to map to the escape key
-imap jj <ESC>
-
-
 " Sets how many lines of history VIM has to remember
 set history=500
 
@@ -165,7 +161,7 @@ set noswapfile
 " Use spaces instead of tabs
 set expandtab
 
-" Be smart when using tabs ;)
+" Even though tabs are spaces <DEL> will delete shiftwidth of spaces
 set smarttab
 
 " 1 tab == 4 spaces
@@ -194,7 +190,7 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
+nnoremap <space> /
 map <c-space> ?
 
 " Disable highlight when <leader><cr> is pressed
@@ -255,10 +251,29 @@ set laststatus=2
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set x to a true delete without copying
+
+nnoremap x "_x
+vnoremap x "_x
+
+nnoremap xx "_dd
+vnoremap xx "_dd
+
+nnoremap x$ "_d$
+vnoremap x$ "_d$
+
+nnoremap xt<space> "_d<space>
+vnoremap xt<space> "_d<space>
+
+"tilling for the x command i.e. xtg will delete all characters up to g without copying.
+for v in split("\'\"" . '0123456789' . '!@#$%^&*()_-+=[]{}\|;:,<>./?' . 'abcdefghijklmnopqrstuvwxyz', '\zs')
+   silent execute('nnoremap xt' . v  . ' "_dt' . v)
+   silent execute('vnoremap xt' . v  . ' "_dt' . v)
+endfor
+
 " Remap VIM 0 to first non-blank character
 map 0 ^
 
@@ -371,4 +386,4 @@ function! VisualSelection(direction, extra_filter) range
 
     let @/ = l:pattern
     let @" = l:saved_reg
-endfunction
+    endfunction
